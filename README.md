@@ -1,4 +1,4 @@
-# pybootstrap
+# docker-flask-api-boilerplate
 
 Project with bootstrap files to create one python project
 
