@@ -1,30 +1,4 @@
-version: '3.6'
-
-volumes:
-  db_data:
-
-services:
-  db:
-    image: mysql:latest
-    restart: always
-    command: mysqld --default-authentication-plugin=mysql_native_password
-    volumes:
-      - db_data:/var/lib/mysql
-    ports:
-      - '3306:3306'
-    environment:
-       MYSQL_DATABASE: 'app-db'
-       MYSQL_USER: 'root'
-       MYSQL_PASSWORD: 'password'
-       MYSQL_ROOT_PASSWORD: 'password'
-  app:
-    restart: always
-    build:
-      context: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - .:/flask_project
-    command: python manage.py runserver 0.0.0.0:8000
-    depends_on:
-      - db
+project:
+  image: project-name:latest
+  volumes:
+   - .:/app

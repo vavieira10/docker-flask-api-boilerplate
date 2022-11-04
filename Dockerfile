@@ -1,18 +1,20 @@
-FROM python:3.6
-ENV PYTHONUNBUFFERED 1
+FROM python:3.10.8-slim
 
-# Set environment variables
+# install git
+RUN apt-get update && apt-get install -y git
+
+COPY ./requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
+
+
+COPY ./project /app/project
+COPY ./tests/ /app/tests/
+COPY ./scripts/ /app/scripts/
+
+
+ENV PYTHONPATH /app
 ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update
-RUN apt-get install python3-dev default-libmysqlclient-dev  -y
+RUN python --version
 
-RUN mkdir /django_project
-WORKDIR /django_project
-ADD requirements.txt /django_project/
-RUN pip install --upgrade pip && pip install -r requirements.txt
-ADD . /django_project/
-
-RUN adduser user
-USER user
+WORKDIR /app
